@@ -24,7 +24,7 @@
         <module>pinyougou-web-user</module>
     </modules>
 
-    <!-- 集中定义依赖版本号 -->
+    <!-- 集中定义依赖版本号 修改测试-->
     <properties>
         <junit.version>4.12</junit.version>
         <spring.version>4.2.4.RELEASE</spring.version>
