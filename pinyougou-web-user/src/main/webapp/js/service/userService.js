@@ -1,13 +1,6 @@
 //服务层
 app.service('userService',function($http){
-	// 回显地址
-	this.findAddr=function () {
-		return $http.get('../addr/findAddr.do');
-	}
-	// 新增地址
-	this.addAddress=function (formData) {
-		return $http.post('../addr/addAddress.do?',formData);
-	}
+	    	
 	//读取列表数据绑定到表单中
 	this.findAll=function(){
 		return $http.get('../user/findAll.do');		
