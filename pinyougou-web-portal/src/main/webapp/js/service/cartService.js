@@ -4,7 +4,11 @@ app.service('cartService',function($http){
 	this.findCartList=function(){
 		return $http.get('cart/findCartList.do');
 	}
-	
+
+	this.add=function(ids){
+		return $http.get('cart/add.do?itemIds='+ids);
+	}
+
 	//添加商品到购物车
 	this.addGoodsToCartList=function(itemId,num){
 		return $http.get('cart/addGoodsToCartList.do?itemId='+itemId+'&num='+num);
@@ -36,5 +40,5 @@ app.service('cartService',function($http){
 		return $http.post('order/add.do',order);		
 	}
 	
-	
+
 });

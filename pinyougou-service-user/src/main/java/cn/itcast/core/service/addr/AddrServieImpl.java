@@ -7,17 +7,8 @@ import com.alibaba.dubbo.config.annotation.Service;
 
 import javax.annotation.Resource;
 import java.util.List;
-
-/**
- * @ClassName AddrServiceImpl
- * @Description 收件人地址
- * @Author 传智播客
- * @Date 12:09 2019/5/21
- * @Version 2.1
- **/
 @Service
-public class AddrServiceImpl implements AddrService {
-
+public class AddrServieImpl implements AddrService {
     @Resource
     private AddressDao addressDao;
 
@@ -36,8 +27,13 @@ public class AddrServiceImpl implements AddrService {
         return list;
     }
 
+    /**
+     * 新增地址
+     * @param address
+     */
     @Override
     public void addAddress(Address address, String name) {
-
+        address.setUserId(name);
+        addressDao.insertSelective(address);
     }
 }

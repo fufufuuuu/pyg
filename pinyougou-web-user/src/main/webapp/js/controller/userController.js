@@ -1,6 +1,18 @@
  //控制层 
-app.controller('userController' ,function($scope,$controller   ,userService){	
+app.controller('userController' ,function($scope,$controller   ,userService){
+
 	$scope.entity = {};
+	// 表单数据
+    $scope.formData = {};
+    $scope.processForm = function() {
+        userService.addAddress($scope.formData).success(function (response) {
+            if (response.flag == 'true') {
+                alert(response.message)
+            }else {
+                alert(response.message)
+            }
+        })
+    };
 	//注册用户
 	$scope.reg=function(){
 		
@@ -31,6 +43,11 @@ app.controller('userController' ,function($scope,$controller   ,userService){
 				alert(response.message);
 			}
 		);		
-	}
-	
+	};
+
+	$scope.findAddr= function(){
+		userService.findAddr().success(function (response) {
+			$scope.addressList=response;
+		})
+	};
 });	
