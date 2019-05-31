@@ -24,6 +24,9 @@
     <result column="experience_value" property="experienceValue" jdbcType="INTEGER" />
     <result column="birthday" property="birthday" jdbcType="TIMESTAMP" />
     <result column="last_login_time" property="lastLoginTime" jdbcType="TIMESTAMP" />
+    <result column="province" property="province" jdbcType="VARCHAR" />
+    <result column="city" property="city" jdbcType="VARCHAR" />
+    <result column="district" property="district" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
@@ -87,7 +90,7 @@
     <if test="fields == null" >
       id, username, password, phone, email, created, updated, source_type, nick_name, name, 
       status, head_pic, qq, account_balance, is_mobile_check, is_email_check, sex, user_level, 
-      points, experience_value, birthday, last_login_time
+      points, experience_value, birthday, last_login_time, province, city, district
     </if>
     <if test="fields != null" >
       ${fields}
@@ -109,7 +112,7 @@
   </select>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
     select 
-    id,username,password,phone,email,created,updated,source_type,nick_name,name,status,head_pic,qq,account_balance,is_mobile_check,is_email_check,sex,user_level,points,experience_value,birthday,last_login_time
+    id,username,password,phone,email,created,updated,source_type,nick_name,name,status,head_pic,qq,account_balance,is_mobile_check,is_email_check,sex,user_level,points,experience_value,birthday,last_login_time,province,city,district
     from tb_user
     where id = #{id,jdbcType=BIGINT}
   </select>
@@ -131,7 +134,8 @@
       qq, account_balance, is_mobile_check, 
       is_email_check, sex, user_level, 
       points, experience_value, birthday, 
-      last_login_time)
+      last_login_time, province, city, 
+      district)
     values (#{id,jdbcType=BIGINT}, #{username,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, 
       #{phone,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, #{created,jdbcType=TIMESTAMP}, 
       #{updated,jdbcType=TIMESTAMP}, #{sourceType,jdbcType=VARCHAR}, #{nickName,jdbcType=VARCHAR}, 
@@ -139,7 +143,8 @@
       #{qq,jdbcType=VARCHAR}, #{accountBalance,jdbcType=DECIMAL}, #{isMobileCheck,jdbcType=VARCHAR}, 
       #{isEmailCheck,jdbcType=VARCHAR}, #{sex,jdbcType=VARCHAR}, #{userLevel,jdbcType=INTEGER}, 
       #{points,jdbcType=INTEGER}, #{experienceValue,jdbcType=INTEGER}, #{birthday,jdbcType=TIMESTAMP}, 
-      #{lastLoginTime,jdbcType=TIMESTAMP})
+      #{lastLoginTime,jdbcType=TIMESTAMP}, #{province,jdbcType=VARCHAR}, #{city,jdbcType=VARCHAR}, 
+      #{district,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="cn.itcast.core.pojo.user.User" >
     insert into tb_user
@@ -210,6 +215,15 @@
       <if test="lastLoginTime != null" >
         last_login_time,
       </if>
+      <if test="province != null" >
+        province,
+      </if>
+      <if test="city != null" >
+        city,
+      </if>
+      <if test="district != null" >
+        district,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="id != null" >
@@ -277,6 +291,15 @@
       </if>
       <if test="lastLoginTime != null" >
         #{lastLoginTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="province != null" >
+        #{province,jdbcType=VARCHAR},
+      </if>
+      <if test="city != null" >
+        #{city,jdbcType=VARCHAR},
+      </if>
+      <if test="district != null" >
+        #{district,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -355,6 +378,15 @@
       <if test="record.lastLoginTime != null" >
         last_login_time = #{record.lastLoginTime,jdbcType=TIMESTAMP},
       </if>
+      <if test="record.province != null" >
+        province = #{record.province,jdbcType=VARCHAR},
+      </if>
+      <if test="record.city != null" >
+        city = #{record.city,jdbcType=VARCHAR},
+      </if>
+      <if test="record.district != null" >
+        district = #{record.district,jdbcType=VARCHAR},
+      </if>
     </set>
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
@@ -383,7 +415,10 @@
       points = #{record.points,jdbcType=INTEGER},
       experience_value = #{record.experienceValue,jdbcType=INTEGER},
       birthday = #{record.birthday,jdbcType=TIMESTAMP},
-      last_login_time = #{record.lastLoginTime,jdbcType=TIMESTAMP}
+      last_login_time = #{record.lastLoginTime,jdbcType=TIMESTAMP},
+      province = #{record.province,jdbcType=VARCHAR},
+      city = #{record.city,jdbcType=VARCHAR},
+      district = #{record.district,jdbcType=VARCHAR}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -454,6 +489,15 @@
       <if test="lastLoginTime != null" >
         last_login_time = #{lastLoginTime,jdbcType=TIMESTAMP},
       </if>
+      <if test="province != null" >
+        province = #{province,jdbcType=VARCHAR},
+      </if>
+      <if test="city != null" >
+        city = #{city,jdbcType=VARCHAR},
+      </if>
+      <if test="district != null" >
+        district = #{district,jdbcType=VARCHAR},
+      </if>
     </set>
     where id = #{id,jdbcType=BIGINT}
   </update>
@@ -479,7 +523,10 @@
       points = #{points,jdbcType=INTEGER},
       experience_value = #{experienceValue,jdbcType=INTEGER},
       birthday = #{birthday,jdbcType=TIMESTAMP},
-      last_login_time = #{lastLoginTime,jdbcType=TIMESTAMP}
+      last_login_time = #{lastLoginTime,jdbcType=TIMESTAMP},
+      province = #{province,jdbcType=VARCHAR},
+      city = #{city,jdbcType=VARCHAR},
+      district = #{district,jdbcType=VARCHAR}
     where id = #{id,jdbcType=BIGINT}
   </update>
 </mapper>
