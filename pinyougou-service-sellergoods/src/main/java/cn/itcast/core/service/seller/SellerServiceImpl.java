@@ -11,6 +11,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 /**
  * @ClassName SellerServiceImpl
@@ -96,4 +97,28 @@ public class SellerServiceImpl implements SellerService {
         // 更新
         sellerDao.updateByPrimaryKeySelective(seller);
     }
+
+    /**
+     * 更新商家信息
+     *
+     * @param seller
+     * @return
+     */
+    @Transactional
+    @Override
+    public void update(Seller seller) {
+        sellerDao.updateByPrimaryKey(seller);
+    }
+
+    /**
+     * 修改保存密码
+     *
+     * @param SellerId
+     */
+   /* @Override
+    public void updatePassword(String SellerId) {
+
+    }*/
+
+
 }

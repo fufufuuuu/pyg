@@ -33,4 +33,14 @@ app.service('sellerService',function($http){
 	this.updateStatus = function(sellerId,status){
 		return $http.get('../seller/updateStatus.do?sellerId='+sellerId+"&status="+status);
 	}
+
+/*//修改
+	this.update1=function(entity){
+		return  $http.post('../seller/update1.do',entity );
+	}*/
+    //修改密码
+	this.updatePassword = function(oldPassword,newPassword,newPasswordOne){
+		return $http.get('../seller/updatePassword.do?'+oldPassword,newPassword,newPasswordOne);
+	}
+
 });

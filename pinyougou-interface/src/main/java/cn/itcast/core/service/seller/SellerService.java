@@ -3,6 +3,8 @@ package cn.itcast.core.service.seller;
 import cn.itcast.core.entity.PageResult;
 import cn.itcast.core.pojo.seller.Seller;
 
+import java.util.List;
+
 /**
  * @ClassName SellerService
  * @Description 商家管理接口
@@ -50,4 +52,21 @@ public interface SellerService {
      * @return void
      **/
     void updateStatus(String sellerId, String status);
+
+
+    /**
+     * 更新商家信息
+     * @param seller
+     * @return
+     */
+   void update(Seller seller);
+
+    /**
+     * 修改保存密码
+     */
+   /* void updatePassword(String SellerId);*/
+
+
+
 }
+
