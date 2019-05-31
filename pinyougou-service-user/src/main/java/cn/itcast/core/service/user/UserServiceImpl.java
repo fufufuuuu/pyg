@@ -98,27 +98,22 @@ public class UserServiceImpl implements UserService {
 
     //修改密码
     @Override
-    public void updatePassword(String userName,String oldPassword, String newPassword) {
+    public void updatePassword(String userName,String OldPassword, String password) {
 
-        User user = findByUserName(userName);
+       //设置查询条件
+        UserQuery query = new UserQuery();
+        query.createCriteria().andUsernameEqualTo(userName);
+        //查询
+        User user = userDao.selectByExample(query).get(0);
 
-        oldPassword = MD5Util.MD5Encode(oldPassword, null);
+        String oldPassword = MD5Util.MD5Encode(OldPassword, null);
 
         if (oldPassword.equals(user.getPassword())){
-            newPassword= MD5Util.MD5Encode(newPassword, null);
-            user.setPassword(newPassword);
+            password= MD5Util.MD5Encode(password, null);
+            user.setPassword(password);
             userDao.updateByPrimaryKey(user);
         }
 
     }
 
-    @Override
-    public User findByUserName(String userName) {
-        //设置查询条件
-        UserQuery query = new UserQuery();
-        query.createCriteria().andUsernameEqualTo(userName);
-        //查询
-        User user = userDao.selectByExample(query).get(0);
-        return user;
-    }
 }

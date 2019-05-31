@@ -32,7 +32,6 @@ public interface UserService {
      **/
     void add(User user, String code);
 
-    void updatePassword(String userName,String oldPassword,String newPassword);
+    void updatePassword(String userName,String OldPassword,String password);
 
-    User findByUserName(String userName );
 }
