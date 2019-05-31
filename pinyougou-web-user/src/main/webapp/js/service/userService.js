@@ -1,11 +1,5 @@
 //服务层
 app.service('userService',function($http){
-
-
-	//修改密码
-    this.updatePassword=function(OldPassword,password){
-        return $http.get('../user/updatePassword.do?OldPassword='+OldPassword+'&password='+password)
-    }
 	//读取列表数据绑定到表单中
 	this.findAll=function(){
 		return $http.get('../user/findAll.do');		
@@ -38,5 +32,8 @@ app.service('userService',function($http){
 	this.sendCode=function(phone){
 		return $http.get('../user/sendCode.do?phone='+phone);
 	}
-
+    //修改密码
+    this.updatePassword=function(OldPassword,password){
+        return $http.get('../user/updatePassword.do?OldPassword='+OldPassword+'&password='+password)
+    }
 });
