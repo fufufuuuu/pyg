@@ -15,6 +15,9 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -60,13 +63,10 @@ public class CartController {
             if(cookies != null && cookies.length > 0){
                 for (Cookie cookie : cookies) {
                     if("BUYER_CART".equals(cookie.getName())){
-                        // 3、有：直接取出并且赋值
-                        // cookie：key-value（String）
-                        String text = cookie.getValue(); // 数据：List<Cart>----json
-                        cartList = JSON.parseArray(text, Cart.class);
-                        flag = true;    // 打开开关
-                        // 找到跳出循环
-                        break;
+                        String decode1 = URLDecoder.decode(cookie.getValue(), "UTF-8");
+                        String decode = URLDecoder.decode(decode1, "UTF-8");
+                        cartList = JSON.parseArray(decode, Cart.class);
+                        flag = true;
                     }
                 }
             }
@@ -118,10 +118,11 @@ public class CartController {
                     cookie.setPath("/");    // 设置cookie共享
                     response.addCookie(cookie);
                 }
-
             }else{ // 未登录
                 // 6-2、将购物车保存到本地（cookie）
-                Cookie cookie = new Cookie("BUYER_CART", JSON.toJSONString(cartList));
+
+                String encode = URLEncoder.encode(JSON.toJSONString(cartList), "UTF-8");
+                Cookie cookie = new Cookie("BUYER_CART", encode);
                 cookie.setMaxAge(60*60);
                 // ip1:port1/   ip2:port2/
                 cookie.setPath("/");    // 设置cookie共享
@@ -143,7 +144,7 @@ public class CartController {
      * @return java.util.List<cn.itcast.core.pojo.cart.Cart>
      **/
     @RequestMapping("/findCartList.do")
-    public List<Cart> findCartList(HttpServletRequest request, HttpServletResponse response){
+    public List<Cart> findCartList(HttpServletRequest request, HttpServletResponse response) throws UnsupportedEncodingException {
         // 判断用户是否登录
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
         // 1、未登录：从本地（cookie）中获取
@@ -152,8 +153,10 @@ public class CartController {
         if(cookies != null && cookies.length > 0){
             for (Cookie cookie : cookies) {
                 if("BUYER_CART".equals(cookie.getName())){
-                    String text = cookie.getValue(); // 数据：List<Cart>----json
-                    cartList = JSON.parseArray(text, Cart.class);
+                    String cookieValue = cookie.getValue();
+                    String encode = URLDecoder.decode(cookieValue, "UTF-8");
+                    System.out.println(encode);
+                    cartList = JSON.parseArray(encode, Cart.class);
                     break;
                 }
             }
@@ -178,8 +181,35 @@ public class CartController {
             cartList = cartService.autoDataToCartList(cartList);
         }
 
-
         return cartList;
 
+    }
+
+    /**
+     * 将商品id传入redis
+     * @param itemIds
+     */
+    @RequestMapping("/add.do")
+    public void addItemIdToRedis(Long[] itemIds){
+        // 判断用户是否登录
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        List<Cart> cartList = null;
+            // 从redis中取出购物车
+            cartList = cartService.findCartListByRedis(username);
+
+        cartService.addItemIdToRedis(itemIds);
+    }
+
+    @RequestMapping("/findPayCart.do")
+    public List<Cart> findPayCart(){
+        // 能来到结算页说明登录了  不用做登录校验
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        // 从redis中获取数据
+        List<Cart> payCart = cartService.findPayCart(username);
+        // 填充购物车信息
+        if (payCart != null){
+            payCart = cartService.autoDataToCartList(payCart);
+        }
+        return payCart;
     }
 }

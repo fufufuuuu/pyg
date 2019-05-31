@@ -2,8 +2,6 @@ package cn.itcast.core.service.user;
 
 import cn.itcast.core.pojo.user.User;
 
-import java.util.List;
-
 /**
  * @ClassName UserService
  * @Description 短信发送接口
@@ -31,7 +29,4 @@ public interface UserService {
      * @return void
      **/
     void add(User user, String code);
-
-    void updatePassword(String userName,String OldPassword,String password);
-
 }

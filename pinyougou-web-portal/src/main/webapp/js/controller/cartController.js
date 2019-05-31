@@ -1,5 +1,5 @@
 //购物车控制层
-app.controller('cartController',function($scope,cartService){
+app.controller('cartController',function($scope,$location,$http,cartService){
 	//查询购物车列表
 	$scope.findCartList=function(){
 		cartService.findCartList().success(
@@ -9,6 +9,34 @@ app.controller('cartController',function($scope,cartService){
 			}
 		);
 	}
+	// 复选框操作
+	// 定义一个数组:
+	$scope.selectIds = [];
+	// 更新复选框：
+	$scope.updateSelection = function($event,id){
+		// 复选框选中
+		if($event.target.checked){
+			// 向数组中添加元素
+			$scope.selectIds.push(id);
+		}else{
+			// 从数组中移除
+			var idx = $scope.selectIds.indexOf(id);
+			$scope.selectIds.splice(idx,1);
+		}
+	};
+
+	$scope.jiesuan = function(){
+		cartService.add($scope.selectIds).success(function (response) {
+			location.href='getOrderInfo.html'
+		})
+	};
+
+	$scope.findPayCart = function(){
+		$http.post('cart/findPayCart.do?').success(function (response) {
+			$scope.cartList2=response;
+			$scope.totalValue= cartService.sum($scope.cartList2);
+		});
+	};
 	
 	//数量加减
 	$scope.addGoodsToCartList=function(itemId,num){

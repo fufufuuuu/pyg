@@ -57,7 +57,7 @@
 
     <!-- 引用dubbo 服务 -->
     <dubbo:application name="pinyougou-web-shop" />
-    <dubbo:registry address="zookeeper://192.168.200.128:2181"/>
+    <dubbo:registry address="zookeeper://10.211.200.3:2181"/>
     <!--需要的服务：只需要其中的一个-->
     <dubbo:reference id="sellerService"  interface="cn.itcast.core.service.seller.SellerService" >
     </dubbo:reference>

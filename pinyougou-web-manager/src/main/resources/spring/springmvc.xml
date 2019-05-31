@@ -34,7 +34,7 @@
     <!--配置消费方名称-->
     <dubbo:application name="pinyougou-web-manager"/>
     <!--配置注册中心-->
-    <dubbo:registry address="zookeeper://192.168.200.128:2181"/>
+    <dubbo:registry address="zookeeper://10.211.200.3:2181"/>
     <!--zk集群注册中心的配置-->
     <!--<dubbo:registry protocol="zookeeper" address="ip1:port1,ip2:port2,ip3:port3"/>-->
 

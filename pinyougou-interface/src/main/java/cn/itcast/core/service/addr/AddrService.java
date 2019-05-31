@@ -21,4 +21,6 @@ public interface AddrService {
      * @return java.util.List<cn.itcast.core.pojo.address.Address>
      **/
     List<Address> findListByLoginUser(String userId);
+
+    void addAddress(Address address, String name);
 }
