@@ -2,6 +2,7 @@ package cn.itcast.core.service.cart;
 
 import cn.itcast.core.pojo.cart.Cart;
 import cn.itcast.core.pojo.item.Item;
+import cn.itcast.core.pojo.order.OrderItem;
 
 import java.util.List;
 
@@ -50,4 +51,9 @@ public interface CartService {
      * @return java.util.List<cn.itcast.core.pojo.cart.Cart>
      **/
     List<Cart> findCartListByRedis(String username);
+
+
+    void addItemIdToRedis(Long[] itemIds);
+
+    List<Cart> findPayCart(String username);
 }

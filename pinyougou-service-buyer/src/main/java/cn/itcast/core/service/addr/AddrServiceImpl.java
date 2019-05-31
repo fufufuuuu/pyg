@@ -35,4 +35,9 @@ public class AddrServiceImpl implements AddrService {
         List<Address> list = addressDao.selectByExample(query);
         return list;
     }
+
+    @Override
+    public void addAddress(Address address, String name) {
+
+    }
 }

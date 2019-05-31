@@ -17,7 +17,7 @@
     
 </head>
 
-<body ng-app="pinyougou" ng-controller="cartController" ng-init="findAddressList();findCartList()">
+<body ng-app="pinyougou" ng-controller="cartController" ng-init="findAddressList();findPayCart()">
 	<!--head-->
 	<div class="top">
 		<div class="py-container">
@@ -166,7 +166,7 @@
 						<ul class="send-detail">
 							<li>
 								
-								<div class="sendGoods" ng-repeat="cart in cartList">
+								<div class="sendGoods" ng-repeat="cart in cartList2">
 									
 									<ul class="yui3-g" ng-repeat="item in cart.orderItemList">
 										<li class="yui3-u-1-6">
