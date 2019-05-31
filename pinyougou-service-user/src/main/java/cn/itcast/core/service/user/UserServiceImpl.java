@@ -2,16 +2,19 @@ package cn.itcast.core.service.user;
 
 import cn.itcast.core.dao.user.UserDao;
 import cn.itcast.core.pojo.user.User;
+import cn.itcast.core.pojo.user.UserQuery;
 import cn.itcast.core.utils.md5.MD5Util;
 import com.alibaba.dubbo.config.annotation.Service;
 import org.apache.commons.lang.RandomStringUtils;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.jms.core.JmsTemplate;
 import org.springframework.jms.core.MessageCreator;
+import org.springframework.security.core.context.SecurityContextHolder;
 
 import javax.annotation.Resource;
 import javax.jms.*;
 import java.util.Date;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -90,5 +93,32 @@ public class UserServiceImpl implements UserService {
         }else{
             throw new RuntimeException("您输入的验证码不正确");
         }
+    }
+
+
+    //修改密码
+    @Override
+    public void updatePassword(String userName,String oldPassword, String newPassword) {
+
+        User user = findByUserName(userName);
+
+        oldPassword = MD5Util.MD5Encode(oldPassword, null);
+
+        if (oldPassword.equals(user.getPassword())){
+            newPassword= MD5Util.MD5Encode(newPassword, null);
+            user.setPassword(newPassword);
+            userDao.updateByPrimaryKey(user);
+        }
+
+    }
+
+    @Override
+    public User findByUserName(String userName) {
+        //设置查询条件
+        UserQuery query = new UserQuery();
+        query.createCriteria().andUsernameEqualTo(userName);
+        //查询
+        User user = userDao.selectByExample(query).get(0);
+        return user;
     }
 }
