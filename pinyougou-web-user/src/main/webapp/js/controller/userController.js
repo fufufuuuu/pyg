@@ -50,4 +50,27 @@ app.controller('userController' ,function($scope,$controller   ,userService){
 			$scope.addressList=response;
 		})
 	};
+
+    //刷新图形验证码
+	$scope.refresh=function () {
+		$scope.regUrl = "user/verifyImage.do?gen=" + Math.random()
+	};
+
+	//修改密码
+    $scope.changePassword=function(){
+
+        userService.updatePassword($scope.entity.OldPassword,$scope.entity.password).success(
+            function(response){
+                //比较两次输入的密码是否一致
+                if($scope.password!=$scope.entity.password){
+                    alert("两次输入密码不一致，请重新输入");
+                    $scope.entity.password="";
+                    $scope.password="";
+                    return ;
+                }
+                alert(response.message);
+            }
+
+        );
+    }
 });	

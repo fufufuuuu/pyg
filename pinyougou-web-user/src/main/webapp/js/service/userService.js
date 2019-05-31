@@ -36,4 +36,5 @@ app.service('userService',function($http){
     this.updatePassword=function(OldPassword,password){
         return $http.get('../user/updatePassword.do?OldPassword='+OldPassword+'&password='+password)
     }
+
 });

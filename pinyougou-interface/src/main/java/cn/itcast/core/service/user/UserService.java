@@ -29,4 +29,9 @@ public interface UserService {
      * @return void
      **/
     void add(User user, String code);
+
+
+    void updatePassword(String userName,String oldPassword,String newPassword);
+
+    User findByUserName(String userName );
 }
